@@ -1,0 +1,45 @@
+//导入config.gradle
+apply from: "${rootProject.rootDir}/config.gradle"
+apply plugin: 'com.android.library'
+
+android {
+
+    //读取config.gradle中的数据
+    project.ext.setDefaultConfig project
+
+    //添加ARouter依赖
+    defaultConfig {
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [ moduleName : project.getName() ]
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    api "com.android.support:appcompat-v7:$rootProject.androidSupportSdkVersion"
+    api "com.android.support.constraint:constraint-layout:$rootProject.constraintLayoutVersion"
+
+    api 'junit:junit:4.12'
+    api 'com.android.support.test:runner:1.0.2'
+    api 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+    //bottom-bar
+    api "com.android.support:design:$rootProject.androidSupportSdkVersion"
+    api "com.roughike:bottom-bar:$rootProject.bottombarVersion"
+
+    //Butter Knife 黄油刀
+//    api "com.jakewharton:butterknife:$rootProject.butterknifeVersion"
+//    annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.butterknifeVersion"
+}

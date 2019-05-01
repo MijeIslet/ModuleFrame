@@ -1,0 +1,39 @@
+//导入config.gradle
+apply from: "${rootProject.rootDir}/config.gradle"
+apply plugin: 'com.android.library'
+
+android {
+
+    //读取config.gradle中的数据
+    project.ext.setDefaultConfig project
+
+    //添加ARouter依赖
+    defaultConfig {
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [ moduleName : project.getName() ]
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+
+    //ARouter路由
+    annotationProcessor "com.alibaba:arouter-compiler:$rootProject.arouterCompilerVersion"
+    // 替换成最新版本, 需要注意的是api
+    // 要与compiler匹配使用，均使用最新版可以保证兼容
+    api  "com.alibaba:arouter-api:$rootProject.arouterApiVersion"
+
+}

@@ -1,0 +1,27 @@
+//导入config.gradle
+apply from: "${rootProject.rootDir}/config.gradle"
+apply plugin: 'com.android.library'
+
+android {
+
+    //读取config.gradle中的数据
+    project.ext.setDefaultConfig project
+
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    //公用依赖包
+    api project(':baseLib:corelib')
+    api project(':baseLib:routerlib')
+
+}

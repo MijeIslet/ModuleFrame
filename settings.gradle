@@ -1,0 +1,1 @@
+include ':app', ':baseLib:corelib', ':baseLib:routerlib', ':projectcorelib', ':module_guidepage', ':module_userhome', ':module_main'
